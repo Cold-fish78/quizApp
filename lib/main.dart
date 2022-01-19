@@ -2,60 +2,40 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 void main() {
-  return runApp(
-    MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: const Text('Dice'),
-          backgroundColor: Colors.red,
+  return runApp(MaterialApp(
+    home: Scaffold(
+      backgroundColor: Colors.teal,
+      appBar: AppBar(
+        title: const Text(
+          "Ask me anything",
+          style: TextStyle(color: Colors.white),
         ),
-        body: const DicePage(),
+        backgroundColor: Colors.blue,
       ),
+      body: AskMeAnything(),
     ),
-  );
+  ));
 }
 
-class DicePage extends StatefulWidget {
-  const DicePage({Key? key}) : super(key: key);
+class AskMeAnything extends StatefulWidget {
+  const AskMeAnything({Key? key}) : super(key: key);
 
   @override
-  _DicePageState createState() => _DicePageState();
+  _AskMeAnythingState createState() => _AskMeAnythingState();
 }
 
-class _DicePageState extends State<DicePage> {
-  int diceface = 1;
-  int diceface2 = 1;
-  void changeDiceFace(){
-    setState(() {
-      diceface2 = Random().nextInt(6) + 1;
-      diceface = Random().nextInt(6) + 1;
-    });
-  }
+class _AskMeAnythingState extends State<AskMeAnything> {
+  int ballNumber = 2;
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: FlatButton(
-              onPressed: () {
-             changeDiceFace();
-              },
-              child: Image.asset('images/dice$diceface.png'),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: FlatButton(
-              onPressed: () {
-               changeDiceFace();
-              },
-              child: Image.asset('images/dice$diceface2.png'),
-            ),
-          ),
-        ],
+      child: FlatButton(
+        onPressed: (){
+        setState(() {
+          ballNumber = Random().nextInt(5) + 1;
+        });
+        },
+        child: Image.asset('images/ball$ballNumber.png'),
       ),
     );
   }
