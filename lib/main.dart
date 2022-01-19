@@ -1,41 +1,21 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 
-void main() {
-  return runApp(MaterialApp(
-    home: Scaffold(
-      backgroundColor: Colors.teal,
-      appBar: AppBar(
-        title: const Text(
-          "Ask me anything",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      body: AskMeAnything(),
-    ),
-  ));
-}
+import 'package:english_words/english_words.dart';
 
-class AskMeAnything extends StatefulWidget {
-  const AskMeAnything({Key? key}) : super(key: key);
 
-  @override
-  _AskMeAnythingState createState() => _AskMeAnythingState();
-}
+void main() => runApp(XylophoneApp());
 
-class _AskMeAnythingState extends State<AskMeAnything> {
-  int ballNumber = 2;
+class XylophoneApp extends StatelessWidget {
+  const XylophoneApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FlatButton(
-        onPressed: (){
-        setState(() {
-          ballNumber = Random().nextInt(5) + 1;
-        });
-        },
-        child: Image.asset('images/ball$ballNumber.png'),
+    return  MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: Container(),
+        ),
       ),
     );
   }
