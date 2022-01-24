@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'questions.dart';
 import 'QuizBrain.dart';
+
 QuizBrain quizbrain = QuizBrain();
 void main() => runApp(Quizzler());
 
@@ -30,20 +32,48 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
- void checkAnswer (bool userAnswer){
-   bool correctAnswer = quizbrain.getAnswer();
-   if(userAnswer ==correctAnswer){
-     print("user picked right answer");
-   } else{
-     print("user picked wrong answer");
-   }
- }
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizbrain.getCorrectAnswer();
 
+    setState(() {
+      //TODO: Step 4 - Use IF/ELSE to check if we've reached the end of the quiz. If so,
+      //On the next line, you can also use if (quizBrain.isFinished()) {}, it does the same thing.
+      if (quizbrain.isFinished() == true) {
+        //TODO Step 4 Part A - show an alert using rFlutter_alert,
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'You\'ve reached the end of the quiz.',
+        ).show();
+
+        //TODO Step 4 Part C - reset the questionNumber,
+        quizbrain.reset();
+
+        //TODO Step 4 Part D - empty out the scoreKeeper.
+        scoreKeeper = [];
+      }
+
+      //TODO: Step 6 - If we've not reached the end, ELSE do the answer checking steps below 👇
+      else {
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(const Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(const Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+        quizbrain.nextQuestion();
+      }
+    });
+  }
 
   // Questions q1 =Questions('you can lead a cow upstairs but not downstairs',false);
   // Questions q2 =Questions('Approximately one quarters of bones are in feet',true);
   // Questions q3 =Questions('a Slug\'s blood is green',true);
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,16 +110,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  checkAnswer(true);
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                });
-             quizbrain.nextquestion();
+
+                checkAnswer(true);
               },
             ),
           ),
@@ -107,16 +129,8 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(true);
-                setState(() {
-                  scoreKeeper.add(
-                    const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
-                });
-              quizbrain.nextquestion();
+
+                checkAnswer(false);
               },
             ),
           ),
@@ -130,8 +144,3 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
