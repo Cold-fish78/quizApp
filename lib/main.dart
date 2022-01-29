@@ -39,21 +39,16 @@ class _QuizPageState extends State<QuizPage> {
       //TODO: Step 4 - Use IF/ELSE to check if we've reached the end of the quiz. If so,
       //On the next line, you can also use if (quizBrain.isFinished()) {}, it does the same thing.
       if (quizbrain.isFinished() == true) {
-        //TODO Step 4 Part A - show an alert using rFlutter_alert,
         Alert(
           context: context,
           title: 'Finished!',
           desc: 'You\'ve reached the end of the quiz.',
         ).show();
 
-        //TODO Step 4 Part C - reset the questionNumber,
-        quizbrain.reset();
 
-        //TODO Step 4 Part D - empty out the scoreKeeper.
+        quizbrain.reset();
         scoreKeeper = [];
       }
-
-      //TODO: Step 6 - If we've not reached the end, ELSE do the answer checking steps below 👇
       else {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(const Icon(
@@ -70,11 +65,6 @@ class _QuizPageState extends State<QuizPage> {
       }
     });
   }
-
-  // Questions q1 =Questions('you can lead a cow upstairs but not downstairs',false);
-  // Questions q2 =Questions('Approximately one quarters of bones are in feet',true);
-  // Questions q3 =Questions('a Slug\'s blood is green',true);
-
   @override
   Widget build(BuildContext context) {
     return Column(
